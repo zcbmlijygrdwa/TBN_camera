@@ -7,12 +7,14 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="zhenyuyang.ucsb.edu.tbn_camera.MainActivity"
+    android:gravity="center_horizontal"
     tools:showIn="@layout/activity_main">
 
     <TextView
         android:id="@+id/text_connection_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="70dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="Status: No Product Connected"
@@ -31,7 +33,7 @@
 
     <TextView
         android:id="@+id/text_model_available"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="text_model_available" />
 
