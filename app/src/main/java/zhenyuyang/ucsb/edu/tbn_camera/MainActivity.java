@@ -145,8 +145,11 @@ public class MainActivity extends AppCompatActivity implements DJIBaseProduct.DJ
         mBtnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"mBtnOpen onClick");
+                //Log.i(TAG,"mBtnOpen onClick");
                 Toast.makeText(getApplicationContext(), "mBtnOpen onClick", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),CameraStreamActivity.class);
+                startActivity(intent);
+
 //                if (Utils.isFastDoubleClick()) return;
 //                //EventBus.getDefault().post(new SetViewWrapper(R.layout.content_component_list, R.string.activity_component_list, getContext()));
 //                int mTitleId = 1122252;

@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -30,37 +29,37 @@
         android:required="true" />
 
     <!-- SDK requirement permission end -->
-
-
     <application
-        android:name="zhenyuyang.ucsb.edu.tbn_camera.common.DJIApplication"
+        android:name=".common.DJIApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.dji.sdk.API_KEY"
             android:value="2156d316f73f85ea4ba0c892" />
 
         <service android:name="dji.sdk.sdkmanager.DJIGlobalService" />
-
         <service android:name="dji.internal.geofeature.flyforbid.FlyforbidUpdateService" />
 
         <!-- Required for receiving GEO system pushing. -->
-        <service android:name="dji.sdk.sdkmanager.GeoSyncFileService"/>
+        <service android:name="dji.sdk.sdkmanager.GeoSyncFileService" />
 
-        <!-- Required for receiving accessory attachment events.
-            This is necessary for product when connecting over USB. -->
+        <!--
+             Required for receiving accessory attachment events.
+            This is necessary for product when connecting over USB.
+        -->
 
 
-        <!-- Required for receiving accessory attachment events.
-    This is necessary for product when connecting over USB. -->
+        <!--
+    Required for receiving accessory attachment events.
+    This is necessary for product when connecting over USB.
+        -->
         <activity
             android:name="dji.sdk.sdkmanager.DJIAoaControllerActivity"
-            android:theme="@android:style/Theme.Translucent" >
+            android:theme="@android:style/Theme.Translucent">
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
             </intent-filter>
@@ -69,9 +68,6 @@
                 android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
                 android:resource="@xml/accessory_filter" />
         </activity>
-
-
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -82,6 +78,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CameraStreamActivity"></activity>
     </application>
 
 </manifest>
