@@ -10,6 +10,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,11 +30,16 @@ import dji.sdk.flightcontroller.DJIFlightControllerDelegate;
 import zhenyuyang.ucsb.edu.tbn_camera.common.DJIApplication;
 import dji.sdk.products.DJIAircraft;
 import dji.sdk.sdkmanager.DJISDKManager;
+import zhenyuyang.ucsb.edu.tbn_camera.networks.GPSSocketClient;
 
 public class CameraStreamActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener{
     private TextureView mVideoSurface = null;
+    private TextView responseTextView = null;
     private TextView textView_test = null;
+    private EditText addressEditText = null;
+    private EditText portEditText = null;
     private Button button_test1 = null;
+    private Button button_connect_gps_server = null;
 
 
     private DJICamera.CameraReceivedVideoDataCallback mReceivedVideoDataCallback = null;
@@ -44,6 +50,8 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
     private DJIFlightController mFlightController;
     public static float[] boundingBox = {0,0,0,0};
     public static StringBuilder builder = new StringBuilder();
+
+    private GPSSocketClient gpsSocketClient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +76,15 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
 
         mVideoSurface = (TextureView) findViewById(R.id.texture_video_previewer_surface);
         textView_test = (TextView)findViewById(R.id.textView_test);
+        responseTextView = (TextView)findViewById(R.id.responseTextView);
         button_test1 = (Button)findViewById(R.id.button_test1);
+        button_connect_gps_server = (Button)findViewById(R.id.button_connect_gps_server);
+        addressEditText = (EditText)findViewById(R.id.addressEditText);
+        portEditText = (EditText)findViewById(R.id.portEditText);
+
+
+
+        //register button listeners
         button_test1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +104,26 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
                                 }
                             }
                         });
+            }
+        });
+
+
+        button_connect_gps_server.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getApplicationContext(), "button_connect_gps_server", Toast.LENGTH_SHORT).show();
+                if(gpsSocketClient==null){
+                    Toast.makeText(getApplicationContext(), "A new connection to GPS server established.", Toast.LENGTH_SHORT).show();
+                    gpsSocketClient  = new GPSSocketClient(addressEditText.getText()
+                            .toString(), Integer.parseInt(portEditText
+                            .getText().toString()), responseTextView);
+                    gpsSocketClient.execute();
+                }
+                else{
+                    gpsSocketClient.execute();
+                }
+
+
             }
         });
 

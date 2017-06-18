@@ -38,6 +38,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button" />
+    <EditText
+        android:id="@+id/addressEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Server ip address" />
+
+    <EditText
+        android:id="@+id/portEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Server port number" />
+
+    <TextView
+        android:id="@+id/responseTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/button_connect_gps_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Connect to GPS server" />
 
 
 </LinearLayout>
