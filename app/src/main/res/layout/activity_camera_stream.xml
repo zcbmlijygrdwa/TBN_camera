@@ -25,7 +25,16 @@
             android:layout_height="300dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center" />
+
     </FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
     <TextView
         android:id="@+id/textView_test"
@@ -42,13 +51,15 @@
         android:id="@+id/addressEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Server ip address" />
+        android:hint="Server ip address"
+        android:text="172.27.35.2"/>
 
     <EditText
         android:id="@+id/portEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Server port number" />
+        android:hint="Server port number"
+        android:text="8080"/>
 
     <TextView
         android:id="@+id/responseTextView"
@@ -59,6 +70,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Connect to GPS server" />
+
+    <Button
+        android:id="@+id/button_disconnect_gps_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Disconnect to GPS server" />
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

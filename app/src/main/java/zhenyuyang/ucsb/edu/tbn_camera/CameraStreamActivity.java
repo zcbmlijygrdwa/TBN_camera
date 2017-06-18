@@ -40,7 +40,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
     private EditText portEditText = null;
     private Button button_test1 = null;
     private Button button_connect_gps_server = null;
-
+    private Button button_disconnect_gps_server = null;
 
     private DJICamera.CameraReceivedVideoDataCallback mReceivedVideoDataCallback = null;
     private DJILBAirLink.DJIOnReceivedVideoCallback mOnReceivedVideoCallback = null;
@@ -51,8 +51,11 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
     public static float[] boundingBox = {0,0,0,0};
     public static StringBuilder builder = new StringBuilder();
 
-    private GPSSocketClient gpsSocketClient = null;
+    private  Thread GSPSocketClientThread;
 
+    private GPSSocketClient gpsSocketClient = null;
+    private volatile boolean gpsSocketClientIsRunning = true;
+    private float gpsSocketClientUpdateInterval = 0.5f;  //seconds
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +82,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         responseTextView = (TextView)findViewById(R.id.responseTextView);
         button_test1 = (Button)findViewById(R.id.button_test1);
         button_connect_gps_server = (Button)findViewById(R.id.button_connect_gps_server);
+        button_disconnect_gps_server = (Button)findViewById(R.id.button_disconnect_gps_server);
         addressEditText = (EditText)findViewById(R.id.addressEditText);
         portEditText = (EditText)findViewById(R.id.portEditText);
 
@@ -112,18 +116,42 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "button_connect_gps_server", Toast.LENGTH_SHORT).show();
-                if(gpsSocketClient==null){
-                    Toast.makeText(getApplicationContext(), "A new connection to GPS server established.", Toast.LENGTH_SHORT).show();
-                    gpsSocketClient  = new GPSSocketClient(addressEditText.getText()
-                            .toString(), Integer.parseInt(portEditText
-                            .getText().toString()), responseTextView);
-                    gpsSocketClient.execute();
-                }
-                else{
-                    gpsSocketClient.execute();
-                }
+//                gpsSocketClient  = new GPSSocketClient(addressEditText.getText()
+//                        .toString(), Integer.parseInt(portEditText
+//                        .getText().toString()), responseTextView);
+//                gpsSocketClient.execute();
 
+                gpsSocketClientIsRunning = true;
+                GSPSocketClientThread =  new Thread(new Runnable() {
+                    public void run() {
+                        while (gpsSocketClientIsRunning) {
+                            // do something in the loop
+                            try
+                            {
+                                Thread.sleep((long)(gpsSocketClientUpdateInterval*1000));
+                                gpsSocketClient  = new GPSSocketClient(addressEditText.getText()
+                                        .toString(), Integer.parseInt(portEditText
+                                        .getText().toString()), responseTextView);
+                                gpsSocketClient.execute();
+                            }
+                            catch (InterruptedException e)
+                            {
+                                // ooops
+                            }
+                        }
+                    }
+                });
 
+                GSPSocketClientThread.start();
+
+            }
+        });
+
+        button_disconnect_gps_server.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gpsSocketClientIsRunning = false;
+                GSPSocketClientThread.interrupt();
             }
         });
 
