@@ -11,18 +11,19 @@
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
         <TextureView
             android:id="@+id/texture_video_previewer_surface"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_width="320dp"
+            android:layout_height="240dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center" />
 
         <zhenyuyang.ucsb.edu.tbn_camera.DrawBoxView
             android:id="@+id/draw_box_view"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_width="320dp"
+            android:layout_height="240dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center" />
 
